@@ -35,3 +35,8 @@ header
 math?
 
 $A_{ij}$ 
+
+$$A_{ij}$$
+
+$$$A_{ij}$$$
+
