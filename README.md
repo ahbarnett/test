@@ -13,6 +13,7 @@ playing around
 
 *italic* **italic**
 _bold_
+__more bold?__
 
 wefwefhk wefw
 
@@ -34,9 +35,10 @@ header
 
 math?
 
-$A_{ij}$ 
+$A_{ij}$
 
 $$A_{ij}$$
 
+Three dollar signs:
 $$$A_{ij}$$$
 
