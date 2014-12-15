@@ -6,7 +6,7 @@ test
 test
 
 playing around
--------------
+--------
 
 *italic* **italic**
 _bold_
