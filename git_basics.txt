@@ -1,0 +1,123 @@
+Git command line playing (once github already set up)
+Barnett 12/15/14
+
+Resources:
+https://www.atlassian.com/git/tutorials
+
+
+setup:
+
+git config --global user.name "ahbarnett"
+git config --global user.email "ahb@math.dartmouth.edu"
+
+git config --global credential.helper cache
+# get 1-hour of login memory:
+git config --global credential.helper 'cache --timeout=3600'
+
+# makes version >2.0 pushes simple:
+git config --global push.default simple
+
+
+clone (download to local dekstop) a repo:
+
+git clone https://github.com/ahbarnett/test
+
+(when is .git suffix needed?)
+
+The local copy is a "remote" (confusingly)
+
+# switch between versions: (overwrites local changes!)
+git checkout readme-edits
+git checkout master
+
+git status
+
+# make local changes then...
+git add README.md
+#                    why do we have to "add" a file that's in the original repo?
+# add must be done every time just before commit (not like svn add !!)
+# Seems like add can be done to a whole directory together.
+# "Staging" before a commit (allows breaking down a complex change into
+# multiple commits)
+
+git commit -m "tweaked readme"
+# doesnt' push to github yet!
+
+# add in all files that have ever been "add"ed and commit :
+git commit -a -m "message"
+
+# check where does git think the original copy is? ("origin" = github.com )
+git remote -v
+
+git push           # actually uploads to github as a commit
+git push origin master  # can choose to push to other branches
+
+
+# to start editing locally:
+git pull             # does fetch then merge
+# (a fetch builds a local copy of origin/master, but doesn't merge)
+
+# to discard local changes and revert to repo current version (one file):
+ git checkout -- somedir/somefile
+
+# cleanly discard local changes for all files:
+git fetch origin
+git reset --hard origin/master
+
+
+# setup up new local repo if not cloning - also needed per-directory I think?
+git init
+# not really needed unless purely local project.
+
+
+# to start a branch locally:
+git checkout -b feature_x
+
+# visualize log of commits as graph:
+git log --oneline --abbrev-commit --all --graph
+
+
+# From: http://think-like-a-git.net/sections/graphs-and-git/garbage-collection.html
+# you can tack the new change on to the previous commit using
+git commit --amend
+# this is if you forget something small
+
+# "references make commits reachable"
+
+# Creating a branch is like saving securely the current version, so can return
+to it
+
+# installed gitg visualizer, see list at  http://git-scm.com/download/gui/linux
+sudo apt-get install gitg
+# shows all branches:
+gitg -all &
+
+# upstream pulling is only if forked from a project?
+# https://help.github.com/articles/fork-a-repo/
+
+git revert - undoes a commit but makes it a new commit.
+
+BRANCHING:
+
+# a branch is a "tip" of a series of commits (pointer to commits).
+# checkout navigates between branches
+
+# to download and set up local copy of branch:
+git checkout -b readme-edits origin/readme-edits
+
+HEAD means current snapshot
+
+# Resolving conflicts:
+# http://www.gitguys.com/topics/merging-with-a-conflict-conflicts-and-resolutions/
+# shows ======== and <<<<<<< and >>>>>>>> meaning, and usage of
+git diff
+
+# Once fixed up conflicted file, do:
+git commit -a -m "README conflict resolved"
+# then do merge ????
+git push origin master
+
+
+git branch -D crazy-experiment        # force delete branch
+
+
