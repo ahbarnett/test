@@ -97,6 +97,14 @@ gitg -all &
 
 git revert - undoes a commit but makes it a new commit.
 
+# if you tried to add a git project as a subdirectory, it treats it as a
+# submodule and prevents it being added, even if you then remove its .git info
+# To fix that:
+
+git rm --cached path_to_submodule
+git add path_to_submodule
+
+
 BRANCHING:
 
 # a branch is a "tip" of a series of commits (pointer to commits).
