@@ -84,8 +84,7 @@ git commit --amend
 
 # "references make commits reachable"
 
-# Creating a branch is like saving securely the current version, so can return
-to it
+# Creating a branch is like saving securely the current version, so can return to it
 
 # installed gitg visualizer, see list at  http://git-scm.com/download/gui/linux
 sudo apt-get install gitg
@@ -97,12 +96,14 @@ gitg -all &
 
 git revert - undoes a commit but makes it a new commit.
 
+
 # if you tried to add a git project as a subdirectory, it treats it as a
 # submodule and prevents it being added, even if you then remove its .git info
 # To fix that:
 
 git rm --cached path_to_submodule
 git add path_to_submodule
+
 
 
 BRANCHING:
@@ -122,10 +123,78 @@ git diff
 
 # Once fixed up conflicted file, do:
 git commit -a -m "README conflict resolved"
+
 # then do merge ????
+git merge --no-ff readme-edits
+
 git push origin master
 
 
 git branch -D crazy-experiment        # force delete branch
 
 
+# include new stuff in the same commit as previous:
+git commit --amend
+# this breaks after you already pushed a change then tried to amend
+# (see git push --help    re amend)
+
+# update changes from origin to local copy:
+git pull
+
+
+---------------- migrate/transfer to new github location, preserving stuff:
+
+Turns out "transfer" is what we want - designed for personal->organization.
+Preserves everything, including links from other people, webhooks, issues,
+wiki. Is the right thing to do.
+https://help.github.com/articles/about-repository-transfers/
+Then:
+git remote -v    (see where it pushes to)
+git remote set-url origin https://github.com/flatironinstitute/finufft.git
+git remote -v    (check it worked)
+
+The following transfers everything except Issues and Wiki:
+git clone --bare https://github.com/ahbarnett/finufft.git
+cd finufft.git
+git push --mirror https://github.com/flatironinstitute/finufft.git
+(it would also forget the property of being "forked from").
+
+This was wrong:
+https://gist.github.com/niksumeiko/8972566
+vikas027 commented on Feb 13, 2016
+@prashathsenthil You have to run these commands as below
+git clone --mirror <url_of_old_repo>
+cd <name_of_old_repo>
+git remote add new-origin <url_of_new_repo>
+git push new-origin --mirror
+Got: (deny updating a hidden ref)
+
+-------- removing the "forked from...":
+https://stackoverflow.com/questions/16052477/delete-fork-dependency-of-a-github-repository
+Ans: contact github support, easy.
+
+
+-------------------- git diff:
+
+git whatchanged --since="1 day ago" -p
+git whatchanged --since="1 day ago" -p <file>   # see changes for a specific file only
+
+----- updating a fork to its master:
+https://garygregory.wordpress.com/2016/11/10/how-to-catch-up-my-git-fork-to-master/
+
+git remote add upstream https://github.com/ORIGINAL_OWNER/ORIGINAL_REPOSITORY.git
+git remote -v     should show:
+    origin https://github.com/garydgregory/thrift.git (fetch)
+    origin https://github.com/garydgregory/thrift.git (push)
+    upstream https://github.com/apache/thrift.git (fetch)
+    upstream https://github.com/apache/thrift.git (push)
+
+git fetch upstream
+git checkout master
+git merge upstream/master
+
+----
+
+
+Show URL of origin:
+git remote -v
