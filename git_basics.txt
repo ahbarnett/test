@@ -198,3 +198,30 @@ git merge upstream/master
 
 Show URL of origin:
 git remote -v
+
+
+--------- for a fork, in gitlab, by hand stay updated with upstream:
+git remote add upstream https://gitlab.com/fastalgorithms/fmm3dbie
+git checkout master
+git fetch upstream
+git pull upstream master
+---- now merge those upstream into current branch too (!):
+git checkout feature/issue-14-hedgehog
+git merge master
+git commit -a -m "merged from Manas upstream"
+git push
+--- this is painful.
+But: gitlab doesn't have this automatically, unless pay them $.
+Also see: https://gitlab.atvg-studios.com/atjontv/Scripts/tree/gitsync script
+
+
+Merge a specific file from another branch. And there is the steps:
+$ git checkout <another-branch> <path-to-file> [<one-more-file> ...]
+$ git status
+$ git commit -m "'Merge' specific file from '<another-branch>'"
+
+get diff since prev commits:
+
+git whatchanged --since="1 month ago" -p filename
+git whatchanged --since="1 day ago" -p filename
+etc
