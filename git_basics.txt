@@ -225,3 +225,26 @@ get diff since prev commits:
 git whatchanged --since="1 month ago" -p filename
 git whatchanged --since="1 day ago" -p filename
 etc
+
+
+-------- for a branch, bring in updates from master?
+git checkout branch
+git merge origin/master
+resolve conflicts
+commit
+
+----- get a file from a branch
+git checkout branch file
+
+
+---------- pruning old branches:
+# list all
+git branch -a
+# list all that have been merged (safe to delete)...
+git branch -a --merged
+# delete locally
+git branch -d foobranch
+# delete on origin server
+git push origin --delete foobranch
+# update the local list of what's on remote...
+git remote prune origin
