@@ -121,6 +121,21 @@ HEAD means current snapshot
 # shows ======== and <<<<<<< and >>>>>>>> meaning, and usage of
 git diff
 
+
+# from: http://gitready.com/advanced/2009/02/25/keep-either-file-in-merge-conflicts.html :
+So, the scenario is: you’re in the middle of a merge, and you want to keep one file or the other.
+$ git merge master     
+  Auto-merged _layouts/default.html
+  CONFLICT (content): Merge conflict in _layouts/default.html
+  Auto-merged index.html
+  CONFLICT (content): Merge conflict in index.html
+  Automatic merge failed; fix conflicts and then commit the result.
+There’s two unmerged files here. According to the git checkout manpage, there’s a --theirs and --ours options on the command. The former will keep the version of the file that you merged in, and the other will keep the original one we had.
+The following commands will keep the original file for index.html, and then use the merged in file only for _layouts/default.html.
+git checkout --ours index.html
+git checkout --theirs _layouts/default.html
+
+
 # Once fixed up conflicted file, do:
 git commit -a -m "README conflict resolved"
 
@@ -222,6 +237,10 @@ $ git commit -m "'Merge' specific file from '<another-branch>'"
 
 get diff since prev commits:
 
+Simplest for checking the changes in the last 2 commits after pull:
+git diff HEAD~2
+git diff HEAD~1
+
 git whatchanged --since="1 month ago" -p filename
 git whatchanged --since="1 day ago" -p filename
 etc
@@ -248,3 +267,49 @@ git branch -d foobranch
 git push origin --delete foobranch
 # update the local list of what's on remote...
 git remote prune origin
+
+
+---------------- locally pull unmerged PR to a project:
+Say there's a PR #2 on the origin:
+git fetch origin pull/2/head:whatevername
+(after the colon you can name the branch whatever you want)
+See: 
+https://stackoverflow.com/questions/14947789/github-clone-from-pull-request
+
+
+
+---------- add SSH since password only deprecated in Aug 2021:
+------- using with github (needed since Aug 2021):  9/18/21.
+https://github.blog/2020-12-15-token-authentication-requirements-for-git-operations/
+add id_rsa.pub to github account through website.
+https://linuxkamarada.com/en/2019/07/14/using-git-with-ssh-keys/#.YUZ8qHVKgS0
+Test with:
+ssh -T git@github.com
+should ask for yes then passphrase.
+
+--------- avoid PAT retyping:
+
+snap install gh    (appears not to be on my Ubuntu apt install)
+https://docs.github.com/en/get-started/getting-started-with-git/caching-your-github-credentials-in-git
+https://cli.github.com/manual/gh_auth_login
+Go to my account:
+https://github.com/settings/tokens
+regen a token with checking admin:org which does read:org
+Then:
+gh auth login --with-token < ~/git.pat
+Should give no error.
+
+-------- removing git warning (new ross laptop) re divergent branches:
+https://salferrarello.com/git-warning-pulling-without-specifying-how-to-reconcile-divergent-branches-is-discouraged/
+https://stackoverflow.com/questions/62653114/how-to-deal-with-this-git-warning-pulling-without-specifying-how-to-reconcile
+# this doesn't create a new commit when pull, just uses fast-forwarding if
+# poss, otherwise error msg...
+git config --global pull.ff only
+
+
+3/21/22:
+--- After you cloned someone's PROJECT, say you forked to your github, you want to push clone to the fork:
+
+git remote set-url origin https://github.com/ahbarnett/PROJECT.git
+# now you can simply commit and push to your fork
+
