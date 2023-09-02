@@ -241,6 +241,8 @@ Simplest for checking the changes in the last 2 commits after pull:
 git diff HEAD~2
 git diff HEAD~1
 
+git diff HEAD^ HEAD
+
 git whatchanged --since="1 month ago" -p filename
 git whatchanged --since="1 day ago" -p filename
 etc
@@ -275,7 +277,7 @@ git fetch origin pull/2/head:whatevername
 (after the colon you can name the branch whatever you want)
 See: 
 https://stackoverflow.com/questions/14947789/github-clone-from-pull-request
-
+I have not figured out how to update this local branch when the PR changes... :(
 
 
 ---------- add SSH since password only deprecated in Aug 2021:
