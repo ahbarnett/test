@@ -315,3 +315,30 @@ git config --global pull.ff only
 git remote set-url origin https://github.com/ahbarnett/PROJECT.git
 # now you can simply commit and push to your fork
 
+
+How add submodule  2/26/24 -------------------------------------------------
+
+git submodule add https://bitbucket.org/jaredw/awesomelibrary
+git add .gitmodules awesomelibrary/
+git commit -m "added submodule"
+# say want to change the URL in the submodule:
+git submodule--helper set-url fmmlib2d https://github.com/ahbarnett/fmmlib2d.git
+git submodule sync
+git submodule update --init --recursive --remote
+
+
+How to push to someone else's PR  4/22/24 .....................................
+Eg Libin has a PR in his fork (branch omp-warning)
+and I want to edit it directly...  "tr" = tempremote :
+
+git remote add tr https://github.com/lu1and10/finufft
+git fetch tr omp-warning
+# create a branch from this...
+git checkout -b libin-omp tr/omp-warning
+# this needs permission from Libin:
+git push tr HEAD:omp-warning
+
+# push a new local branch upstream, say to make a PR out of it.............
+git checkout -b <branch>
+(Edit files, add and commit. Then push with the -u (short for --set-upstream) option:)
+git push -u origin <branch>
