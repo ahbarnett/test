@@ -342,3 +342,16 @@ git push tr HEAD:omp-warning
 git checkout -b <branch>
 (Edit files, add and commit. Then push with the -u (short for --set-upstream) option:)
 git push -u origin <branch>
+
+# cherry-pick commits into a branch:
+https://stackoverflow.com/questions/881092/how-to-merge-a-specific-commit-in-git/881112#881112
+# better one:
+https://mattstauffer.com/blog/how-to-merge-only-specific-commits-from-a-pull-request/
+
+# delete a tag can't be done on website - use cmd line then push:
+git tag -d v2.3.1
+git push origin :v2.3.1
+
+# skip clang-format verification hooks:
+-n
+git commit -nam "msg"
